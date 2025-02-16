@@ -1,4 +1,4 @@
-import mongoose from "mongose";
+import mongoose from "mongoose";
 import bcrypt from "bcrypt"; 
 
 const Schema = mongoose.Schema;
@@ -44,7 +44,7 @@ const userSchema = new Schema({
         required: [true, 'Phone number is Required'],
         validate: {
             validator: function(v){
-                return /\(\d{2}\)\s?\d{4,5}-\d{4}/.test(v);
+            return /^\(\d{2}\)\s?\d{4,5}-\d{4}$/.test(v);
             },
             message: props => `${props.value} is not a valid phone number. It should be in the format (XX) XXXX-XXXX.`
         }
