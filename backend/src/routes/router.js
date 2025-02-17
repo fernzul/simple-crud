@@ -7,6 +7,6 @@ router.get("/", (req, res) => {
     res.status(200).json({ message: "API is running!" });
 });
 
-router.use("/user", userController);
+router.use("/users", userController);
 
 export default router;

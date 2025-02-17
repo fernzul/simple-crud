@@ -21,33 +21,15 @@ const userSchema = new Schema({
     password : {
         type: String,
         required: [true, 'Password is Required.'],
-        validate: {
-            validator: function(v){
-                return /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(v);
-            },
-            message: props => `${props.value} is not a valid password. Password must be at least 8 characters long and contain at least one number.`
-        }
     },
     email: {
         type: String,
         required: [true, 'Email is Required'],
         unique: true,
-        validate: {
-            validator: function(v){
-                return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com|com\.br)$/.test(v);
-            },
-            message: props => `${props.value} is not a valid email. It should contain '@' and end with '.com' or '.com.br'.`
-        }
     },
     phone: {
-        type: Number,
+        type: String,
         required: [true, 'Phone number is Required'],
-        validate: {
-            validator: function(v){
-            return /^\(\d{2}\)\s?\d{4,5}-\d{4}$/.test(v);
-            },
-            message: props => `${props.value} is not a valid phone number. It should be in the format (XX) XXXX-XXXX.`
-        }
     }
 }, {timestamps: true})
 

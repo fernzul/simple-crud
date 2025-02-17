@@ -12,7 +12,7 @@ router.get('/users', async (req, res) => {
     }
 });
 
-router.get('/users/:id', async (req, res) => {
+router.get('/getUsers/:id', async (req, res) => {
     try {
         const user = await userService.getUser(req.params.id);
         if (!user) {
@@ -24,13 +24,13 @@ router.get('/users/:id', async (req, res) => {
     }
 });
 
-router.post('/users', async (req, res) => {
+router.post('/postUser', async (req, res) => {
     try {
-        const { name, userName, password, email, phone } = req.body;
-        if (!name || !userName || !password || !email || !phone) {
+        const { name, lastName, userName, password, email, phone } = req.body;
+        if (!name || !lastName|| !userName || !password || !email || !phone) {
             return res.status(400).json({ message: "All fields are required" });
         }
-        const newUser = await userService.saveUser({ name, userName, password, email, phone });
+        const newUser = await userService.saveUser({ name, lastName, userName, password, email, phone });
         res.status(201).json(newUser);
     } catch (error) {
         res.status(500).json({ message: "Error creating user", error: error.message });

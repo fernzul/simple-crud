@@ -8,28 +8,28 @@ const getUser = async (id) => {
     return await UserRepository.getUser(id);
 };
 
-const saveUser = async ({ name, login, password, email, phone }) => {
-    return await UserRepository.saveUser({ name, login, password, email, phone });
+const saveUser = async ({ name, lastName, userName, password, email, phone }) => {
+    return await UserRepository.saveUser({ name, lastName, userName, password, email, phone });
 };
 
-const updateUser = async (id, { name, login, password, email, phone }) => {
-    return await UserRepository.updateUser(id, { name, login, password, email, phone });
+const updateUser = async (id, { name, lastName, userName, password, email, phone }) => {
+    return await UserRepository.updateUser(id, { name, lastName, userName, password, email, phone });
 };
 
 const deleteUser = async (id) => {
     return await UserRepository.deleteUser(id);
 };
 
-const getUserByLogin = async (login) => {
-    return await UserRepository.getUserByLogin(login);
+const getUserByUserName = async (userName) => {
+    return await UserRepository.getUserByUserName(userName);
 };
 
 const getUserByEmail = async (email) => {
     return await UserRepository.getUserByEmail(email);
 };
 
-const validateUserLogin = async (login, password) => {
-    return await UserRepository.validateUserLogin(login, password);
+const validateUserName = async (userName, password) => {
+    return await UserRepository.validateUserName(userName, password);
 };
 
 const userService = {
@@ -38,9 +38,9 @@ const userService = {
     saveUser,
     updateUser,
     deleteUser,
-    getUserByLogin,
+    getUserByUserName,
     getUserByEmail,
-    validateUserLogin
+    validateUserName
 };
 
 export default userService;
