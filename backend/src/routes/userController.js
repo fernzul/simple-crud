@@ -3,7 +3,7 @@ import userService from "../services/userServices.js";
 
 const router = express.Router();
 
-router.get('/users', async (req, res) => {
+router.get('/', async (req, res) => {
     try {
         const users = await userService.getAllUsers();
         res.status(200).json(users);
@@ -12,7 +12,21 @@ router.get('/users', async (req, res) => {
     }
 });
 
-router.get('/getUsers/:id', async (req, res) => {
+router.get('/:userName', async (req, res) => {
+    try {
+        const { userName } = req.params; // Pegando o userName da URL
+        const user = await userService.getUserByUserName(userName); // Passando o userName como argumento
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        res.status(200).json(user);        
+    } catch (error) {
+        res.status(500).json({ message: "Error fetching user", error: error.message });
+    }
+});
+
+router.get('/:id', async (req, res) => {
     try {
         const user = await userService.getUser(req.params.id);
         if (!user) {
@@ -24,7 +38,7 @@ router.get('/getUsers/:id', async (req, res) => {
     }
 });
 
-router.post('/postUser', async (req, res) => {
+router.post('/', async (req, res) => {
     try {
         const { name, lastName, userName, password, email, phone } = req.body;
         if (!name || !lastName|| !userName || !password || !email || !phone) {
@@ -37,7 +51,7 @@ router.post('/postUser', async (req, res) => {
     }
 });
 
-router.put('/users/:id', async (req, res) => {
+router.put('/:id', async (req, res) => {
     try {
         const updatedUser = await userService.updateUser(req.params.id, req.body);
         if (!updatedUser) {
@@ -49,7 +63,7 @@ router.put('/users/:id', async (req, res) => {
     }
 });
 
-router.delete('/users/:id', async (req, res) => {
+router.delete('/:id', async (req, res) => {
     try {
         const deletedUser = await userService.deleteUser(req.params.id);
         if (!deletedUser) {

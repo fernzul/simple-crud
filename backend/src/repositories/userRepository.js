@@ -19,7 +19,8 @@ const getUser = async (id) => {
 
 const saveUser = async ({ name, lastName, userName, password, email, phone }) => {
     try {
-        const user = new User({ name, lastName, userName, password, email, phone });
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const user = new User({ name, lastName, userName, password: hashedPassword, email, phone });
         return await user.save(); 
     } catch (error) {
         throw new Error(error);
