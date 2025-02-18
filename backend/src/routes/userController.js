@@ -12,17 +12,25 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.get('/:userName', async (req, res) => {
+// Curti isso aqui, tava dando conflito com 2 router.get, um pra userName e outro para Email
+// assim ficou bacana, talvez exista uma forma melhor de lidar com isso, por enquanto o if serve
+router.get('/:param', async (req, res) => {
     try {
-        const { userName } = req.params; // Pegando o userName da URL
-        const user = await userService.getUserByUserName(userName); // Passando o userName como argumento
+        const { param } = req.params;
+        let user;
+
+        if (param.includes('@')) {
+            user = await userService.getUserByEmail(param);
+        } else {
+            user = await userService.getUserByUserName(param);
+        }
         if (!user) {
-            return res.status(404).json({ message: "User not found" });
+            return res.status(404).json({ message: "User/Email not found" });
         }
 
-        res.status(200).json(user);        
+        res.status(200).json(user);
     } catch (error) {
-        res.status(500).json({ message: "Error fetching user", error: error.message });
+        res.status(500).json({ message: "Error fetching user/email", error: error.message });
     }
 });
 
